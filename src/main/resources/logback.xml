@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %level [%file:%line] %msg%n
+      </pattern>
+    </encoder>
+    <encoding>UTF-8</encoding>
+  </appender>
+
+  <logger name="com.github.pires" level="trace" />
+  <logger name="org.apache.cassandra" level="warn" />
+  <logger name="com.impetus.kundera" level="trace" />
+  <logger name="me.prettyprint" level="warn" />
+  <logger name="org.cassandraunit.utils" level="warn" />
+
+  <root level="warn">
+    <appender-ref ref="CONSOLE" />
+  </root>
+
+</configuration>

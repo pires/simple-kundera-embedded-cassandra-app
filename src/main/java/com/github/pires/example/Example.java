@@ -13,12 +13,14 @@
 package com.github.pires.example;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.pires.example.dao.UserDao;
 import com.github.pires.example.model.User;
 import com.google.inject.Inject;
+import com.impetus.client.cassandra.common.CassandraConstants;
 
 public class Example {
 
@@ -30,7 +32,7 @@ public class Example {
 	@Inject
 	public Example(UserDao userDao) {
 		this.userDao = userDao;
-		userDao.getEntityManager().setProperty("cql.version", "3.0.0");
+		userDao.getEntityManager().setProperty("cql.version", CassandraConstants.CQL_VERSION_3_0);
 	}
 
 	public void run() {
@@ -52,8 +54,10 @@ public class Example {
 			logger.info(" --> {}", user);
 
 		logger.info("Querying DB for persons with last name Pires..");
-		for (User user : userDao.findNativeByLastName("Pires"))
-			logger.info(user.toString());
+		List<User> pireses = userDao.findNativeByLastName("Pires");
+		logger.info("Found {} Pires", pireses.size());
+		for (User user : pireses)
+			logger.info(" --> {}", user);
 	}
 
 }

@@ -12,6 +12,7 @@
  */
 package com.github.pires.example;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,8 +46,10 @@ public class Example {
 			logger.info(user.toString());
 
 		logger.info("Querying DB for persons with first name Joana..");
-		for (User user : userDao.findByFirstName("Joana"))
-			logger.info(user.toString());
+		List<User> joanas = userDao.findByFirstName("Joana");
+		logger.info("Found {} Joanas", joanas.size());
+		for (User user : joanas)
+			logger.info(" --> {}", user);
 
 		logger.info("Querying DB for persons with last name Pires..");
 		for (User user : userDao.findNativeByLastName("Pires"))

@@ -24,20 +24,21 @@ public class UserDao extends AbstractDao<User> {
 	}
 
 	/**
-	 * JPQL query.
+	 * Finds {@link User} instances with specified first name.
+	 * <p>
+	 * This is a JPQL query.
 	 * 
 	 * @param firstName
 	 *            the first name of the user to query for
 	 * @return a list of {@link User} instances with specified first name.
 	 */
 	public List<User> findByFirstName(String firstName) {
-		String sql = "select u from User u where u.firstName = '" + firstName
-		        + "'";
-		List<User> results = getEntityManager().createQuery(sql, User.class)
+		String sql = "select u from User u where u.firstName="
+		        .concat(firstName);
+		List<User> results = getEntityManager().createQuery(sql)
 		        .getResultList();
-		results = results == null ? new ArrayList<User>() : results;
 
-		return results;
+		return results == null ? new ArrayList<User>() : results;
 	}
 
 	/**

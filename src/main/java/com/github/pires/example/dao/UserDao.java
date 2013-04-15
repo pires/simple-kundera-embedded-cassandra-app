@@ -49,12 +49,12 @@ public class UserDao extends AbstractDao<User> {
 	 * @return a list of {@link User} instances with specified surname.
 	 */
 	public List<User> findNativeByLastName(String surname) {
-		String sql = "select * from users where surname = '" + surname + "'";
+		String sql = "select * from users where surname='".concat(surname)
+		        .concat("'");
 		List<User> results = getEntityManager().createNativeQuery(sql,
 		        User.class).getResultList();
-		results = results == null ? new ArrayList<User>() : results;
 
-		return results;
+		return results == null ? new ArrayList<User>() : results;
 	}
 
 }

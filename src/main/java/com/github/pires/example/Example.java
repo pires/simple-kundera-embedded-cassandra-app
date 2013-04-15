@@ -32,7 +32,8 @@ public class Example {
 	@Inject
 	public Example(UserDao userDao) {
 		this.userDao = userDao;
-		userDao.getEntityManager().setProperty("cql.version", CassandraConstants.CQL_VERSION_3_0);
+		userDao.getEntityManager().setProperty("cql.version",
+		        CassandraConstants.CQL_VERSION_3_0);
 	}
 
 	public void run() {

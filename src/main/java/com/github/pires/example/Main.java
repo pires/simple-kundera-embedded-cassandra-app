@@ -12,7 +12,7 @@
  */
 package com.github.pires.example;
 
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
+import org.apache.cassandra.service.EmbeddedCassandraService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class Main {
 		try {
 			// set-up embedded Cassandra instance
 			logger.info("Starting embedded Cassandra instance..");
-			EmbeddedCassandraServerHelper.startEmbeddedCassandra();
+			new EmbeddedCassandraService().start();
 			logger.info("Cassandra started.");
 
 			// inject stuff
@@ -38,8 +38,7 @@ public class Main {
 			injector.getInstance(Example.class).run();
 
 			// clean and exit
-			logger.info("Cleaning-up and finishing..");
-			EmbeddedCassandraServerHelper.stopEmbeddedCassandra();
+			logger.info("Exiting..");
 		} catch (Exception e) {
 			logger.error("There was an error.", e);
 		} finally {

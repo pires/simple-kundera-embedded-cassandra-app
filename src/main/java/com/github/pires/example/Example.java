@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import com.github.pires.example.dao.UserDao;
 import com.github.pires.example.model.User;
 import com.google.inject.Inject;
-import com.impetus.client.cassandra.common.CassandraConstants;
 
 public class Example {
 
@@ -32,8 +31,6 @@ public class Example {
 	@Inject
 	public Example(UserDao userDao) {
 		this.userDao = userDao;
-		userDao.getEntityManager().setProperty("cql.version",
-		        CassandraConstants.CQL_VERSION_3_0);
 	}
 
 	public void run() {

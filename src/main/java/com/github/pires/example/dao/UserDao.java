@@ -14,8 +14,15 @@ package com.github.pires.example.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.cassandra.thrift.ConsistencyLevel;
+
+import com.github.pires.example.Constants;
 import com.github.pires.example.model.User;
+import com.impetus.client.cassandra.common.CassandraConstants;
+import com.impetus.client.cassandra.thrift.ThriftClient;
+import com.impetus.kundera.client.Client;
 
 public class UserDao extends AbstractDao<User> {
 
@@ -49,6 +56,12 @@ public class UserDao extends AbstractDao<User> {
 	 * @return a list of {@link User} instances with specified surname.
 	 */
 	public List<User> findNativeByLastName(String surname) {
+		Map<String, Client> clientMap = (Map<String, Client>) getEntityManager()
+		        .getDelegate();
+		ThriftClient tc = (ThriftClient) clientMap.get(Constants.PU);
+		tc.setCqlVersion(CassandraConstants.CQL_VERSION_3_0);
+		tc.setConsistencyLevel(ConsistencyLevel.QUORUM);
+
 		String sql = "select * from users where surname='".concat(surname)
 		        .concat("'");
 		List<User> results = getEntityManager().createNativeQuery(sql,

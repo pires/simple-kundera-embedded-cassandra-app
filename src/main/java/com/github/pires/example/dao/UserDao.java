@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import org.apache.cassandra.thrift.ConsistencyLevel;
 
 import com.github.pires.example.Constants;
@@ -40,10 +42,10 @@ public class UserDao extends AbstractDao<User> {
 	 * @return a list of {@link User} instances with specified first name.
 	 */
 	public List<User> findByFirstName(String firstName) {
-		String sql = "select u from User u where u.firstName="
-		        .concat(firstName);
-		List<User> results = getEntityManager().createQuery(sql)
-		        .getResultList();
+		String sql = "select u from User u where u.firstName = :firstname";
+		Query q = getEntityManager().createQuery(sql);
+		q.setParameter("firstname", firstName);
+		List<User> results = q.getResultList();
 
 		return results == null ? new ArrayList<User>() : results;
 	}

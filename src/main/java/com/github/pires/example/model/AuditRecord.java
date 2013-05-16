@@ -19,13 +19,23 @@ import javax.persistence.Table;
 
 import com.github.pires.example.Constants;
 import com.google.common.base.Objects;
+import com.impetus.kundera.index.Index;
+import com.impetus.kundera.index.IndexCollection;
 
 @Entity
 @Table(name = "audit_records", schema = Constants.KEYSPACE)
+@IndexCollection(columns = { @Index(name = "appIdIndex", type = "UTF8Type"),
+        @Index(name = "timestampIndex", type = "LongType") })
 public class AuditRecord {
 
 	@EmbeddedId
 	private AuditRecordId id;
+
+	@Column
+	private String appIdIndex;
+
+	@Column
+	private Long timestampIndex;
 
 	@Column
 	private String method;
@@ -51,10 +61,13 @@ public class AuditRecord {
 	public AuditRecord() {
 	}
 
-	public AuditRecord(AuditRecordId id, String method, String path,
-	        String action, Long elapsed, String requestBody,
-	        Integer responseStatus, String responseBody) {
+	public AuditRecord(AuditRecordId id, String appIdIndex,
+	        Long timestampIndex, String method, String path, String action,
+	        Long elapsed, String requestBody, Integer responseStatus,
+	        String responseBody) {
 		this.id = id;
+		this.appIdIndex = appIdIndex;
+		this.timestampIndex = timestampIndex;
 		this.method = method;
 		this.path = path;
 		this.action = action;
@@ -70,6 +83,22 @@ public class AuditRecord {
 
 	public void setId(AuditRecordId id) {
 		this.id = id;
+	}
+
+	public String getAppIdIndex() {
+		return appIdIndex;
+	}
+
+	public void setAppIdIndex(String appIdIndex) {
+		this.appIdIndex = appIdIndex;
+	}
+
+	public Long getTimestampIndex() {
+		return timestampIndex;
+	}
+
+	public void setTimestampIndex(Long timestampIndex) {
+		this.timestampIndex = timestampIndex;
 	}
 
 	public String getMethod() {

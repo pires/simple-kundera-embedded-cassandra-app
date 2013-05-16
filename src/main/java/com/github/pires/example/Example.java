@@ -36,6 +36,9 @@ public class Example {
 	private final UserDao userDao;
 	private final AuditRecordDao arDao;
 
+	private final String APP1 = "app1";
+	private final String APP2 = "app2";
+
 	@Inject
 	public Example(UserDao userDao, AuditRecordDao arDao) {
 		this.userDao = userDao;
@@ -80,48 +83,65 @@ public class Example {
 	 */
 	private void testAuditRecordDao() {
 		persist_and_query_all();
+		find_all_by_appId();
 		find_all_between_time_interval();
 	}
 
 	private void persist_and_query_all() {
 		Long t = 0L;
-		AuditRecordId arid1 = new AuditRecordId("app1", "user1", "0", t);
+
+		AuditRecordId arid1 = new AuditRecordId(APP1, "user1", "0", t);
 		AuditRecord ar1 = new AuditRecord();
 		ar1.setId(arid1);
+		ar1.setAppIdIndex(APP1);
+		ar1.setTimestampIndex(t);
 		arDao.create(ar1);
 
 		t = new Date().getTime();
-		AuditRecordId arid2 = new AuditRecordId("app1", "user2", "1", t);
+		AuditRecordId arid2 = new AuditRecordId(APP1, "user2", "1", t);
 		AuditRecord ar2 = new AuditRecord();
 		ar2.setId(arid2);
+		ar2.setAppIdIndex(APP1);
+		ar2.setTimestampIndex(t);
 		arDao.create(ar2);
 
 		t -= 1000;
-		AuditRecordId arid3 = new AuditRecordId("app1", "user1", "1", t);
+		AuditRecordId arid3 = new AuditRecordId(APP1, "user1", "1", t);
 		AuditRecord ar3 = new AuditRecord();
 		ar3.setId(arid3);
+		ar2.setAppIdIndex(APP1);
+		ar3.setTimestampIndex(t);
 		arDao.create(ar3);
 
 		t += 100;
-		AuditRecordId arid4 = new AuditRecordId("app2", "user1", "0", t);
+		AuditRecordId arid4 = new AuditRecordId(APP1, "user1", "0", t);
 		AuditRecord ar4 = new AuditRecord();
 		ar4.setId(arid4);
+		ar4.setAppIdIndex(APP1);
+		ar4.setTimestampIndex(t);
 		arDao.create(ar4);
 
-		t -= 5000;
-		AuditRecordId arid5 = new AuditRecordId("app2", "user1", "0", t);
+		t -= 15000;
+		AuditRecordId arid5 = new AuditRecordId(APP2, "user1", "0", t);
 		AuditRecord ar5 = new AuditRecord();
 		ar5.setId(arid5);
+		ar5.setAppIdIndex(APP2);
+		ar5.setTimestampIndex(t);
 		arDao.create(ar5);
 
 		for (AuditRecord record : arDao.findAll())
 			logger.info("AuditRecord: {}", record);
 	}
 
+	private void find_all_by_appId() {
+		for (AuditRecord record : arDao.find_all_by_appId(APP1))
+			logger.info("AuditRecord: {}", record);
+	}
+
 	private void find_all_between_time_interval() {
 		final long begin = 0L;
 		final long end = new Date().getTime();
-		for (AuditRecord record : arDao.find_all_between_time_interval(
+		for (AuditRecord record : arDao.find_all_between_time_interval(APP1,
 		        begin + 1, end)) {
 			logger.info("Is timestamp greater than begin? {}", record.getId()
 			        .getTimestamp() > begin);

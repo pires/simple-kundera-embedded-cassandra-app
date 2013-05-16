@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.github.pires.example.Constants;
+import com.google.common.base.Objects;
 import com.impetus.kundera.index.Index;
 import com.impetus.kundera.index.IndexCollection;
 
@@ -72,15 +73,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", surname=");
-		builder.append(surname);
-		builder.append("]");
-		return builder.toString();
+		return Objects.toStringHelper(this).add("id", id)
+		        .add("firstname", firstName).add("surname", surname).toString();
 	}
 
 }

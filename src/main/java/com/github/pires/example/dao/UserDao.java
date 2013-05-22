@@ -14,17 +14,10 @@ package com.github.pires.example.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 
-import org.apache.cassandra.thrift.ConsistencyLevel;
-
-import com.github.pires.example.Constants;
 import com.github.pires.example.model.User;
-import com.impetus.client.cassandra.common.CassandraConstants;
-import com.impetus.client.cassandra.thrift.ThriftClient;
-import com.impetus.kundera.client.Client;
 
 public class UserDao extends AbstractDao<User> {
 
@@ -42,8 +35,8 @@ public class UserDao extends AbstractDao<User> {
 	 * @return a list of {@link User} instances with specified first name.
 	 */
 	public List<User> findByFirstName(String firstName) {
-		String sql = "select u from User u where u.firstName = :firstname";
-		Query q = getEntityManager().createQuery(sql);
+		String cql = "select u from User u where u.firstName = :firstname";
+		Query q = getEntityManager().createQuery(cql);
 		q.setParameter("firstname", firstName);
 		List<User> results = q.getResultList();
 
@@ -58,16 +51,10 @@ public class UserDao extends AbstractDao<User> {
 	 * @return a list of {@link User} instances with specified surname.
 	 */
 	public List<User> findNativeByLastName(String surname) {
-		Map<String, Client> clientMap = (Map<String, Client>) getEntityManager()
-		        .getDelegate();
-		ThriftClient tc = (ThriftClient) clientMap.get(Constants.PU);
-		tc.setCqlVersion(CassandraConstants.CQL_VERSION_3_0);
-		tc.setConsistencyLevel(ConsistencyLevel.QUORUM);
-
-		String sql = "select * from users where surname='".concat(surname)
-		        .concat("'");
-		List<User> results = getEntityManager().createNativeQuery(sql,
-		        User.class).getResultList();
+		String cql = "select u from User u where u.surname = :surname";
+		Query q = getEntityManager().createQuery(cql);
+		q.setParameter("surname", surname);
+		List<User> results = q.getResultList();
 
 		return results == null ? new ArrayList<User>() : results;
 	}

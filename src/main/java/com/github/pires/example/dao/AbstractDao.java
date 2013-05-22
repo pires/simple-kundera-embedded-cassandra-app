@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import com.google.inject.Inject;
+import com.impetus.client.cassandra.common.CassandraConstants;
 
 /**
  * Abstract Data-Access Object class to be implemented by all DAO's.

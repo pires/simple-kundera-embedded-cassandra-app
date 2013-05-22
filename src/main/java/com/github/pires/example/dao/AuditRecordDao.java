@@ -53,8 +53,8 @@ public class AuditRecordDao extends AbstractDao<AuditRecord> {
 	 * 
 	 *         TODO check that begin is no greater than end
 	 */
-	public List<AuditRecord> find_all_between_time_interval(String appIdIndex,
-	        Long begin, Long end) {
+	public List<AuditRecord> find_all_by_appId_and_between_time_interval(
+	        String appIdIndex, Long begin, Long end) {
 		String cql = "select a from AuditRecord a where a.appIdIndex = :appIdIndex and a.timestampIndex >= :begin and a.timestampIndex <= :end";
 		Query q = getEntityManager().createQuery(cql);
 		q.setParameter("appIdIndex", appIdIndex);

@@ -5,7 +5,7 @@
   version="2.0">
   <persistence-unit name="cassandra_pu">
     <provider>com.impetus.kundera.KunderaPersistence</provider>
-    
+
     <properties>
       <property name="kundera.nodes" value="localhost" />
       <property name="kundera.port" value="9171" />
@@ -15,6 +15,7 @@
         value="com.impetus.client.cassandra.thrift.ThriftClientFactory" />
       <property name="kundera.cache.provider.class"
         value="com.impetus.kundera.cache.ehcache.EhCacheProvider" />
+      <property name="kundera.client.property" value="kundera-cassandra.xml" />
       <property name="kundera.cache.config.resource" value="/ehcache-test.xml" />
       <property name="kundera.ddl.auto.prepare" value="create" />
     </properties>

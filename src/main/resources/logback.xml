@@ -10,9 +10,7 @@
 
   <logger name="com.github.pires" level="trace" />
   <logger name="org.apache.cassandra" level="warn" />
-  <logger name="com.impetus.kundera" level="trace" />
-  <logger name="me.prettyprint" level="warn" />
-  <logger name="org.cassandraunit.utils" level="warn" />
+  <logger name="com.impetus" level="trace" />
 
   <root level="warn">
     <appender-ref ref="CONSOLE" />

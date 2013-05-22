@@ -82,9 +82,12 @@ public class Example {
 	 * Test {@link AuditRecordDao}.
 	 */
 	private void testAuditRecordDao() {
+		logger.info("PERSIST AND QUERY ALL");
 		persist_and_query_all();
+		logger.info("FIND ALL BY APP ID");
 		find_all_by_appId();
-		find_all_between_time_interval();
+		logger.info("FIND ALL BETWEEN TIME INTERVAL");
+		find_all_by_appId_and_between_time_interval();
 	}
 
 	private void persist_and_query_all() {
@@ -109,7 +112,7 @@ public class Example {
 		AuditRecordId arid3 = new AuditRecordId(APP1, "user1", "1", t);
 		AuditRecord ar3 = new AuditRecord();
 		ar3.setId(arid3);
-		ar2.setAppIdIndex(APP1);
+		ar3.setAppIdIndex(APP1);
 		ar3.setTimestampIndex(t);
 		arDao.create(ar3);
 
@@ -138,16 +141,14 @@ public class Example {
 			logger.info("AuditRecord: {}", record);
 	}
 
-	private void find_all_between_time_interval() {
+	private void find_all_by_appId_and_between_time_interval() {
 		final long begin = 0L;
 		final long end = new Date().getTime();
-		for (AuditRecord record : arDao.find_all_between_time_interval(APP1,
-		        begin + 1, end)) {
-			logger.info("Is timestamp greater than begin? {}", record.getId()
-			        .getTimestamp() > begin);
-			logger.info("Is timestamp less than end? {}", record.getId()
-			        .getTimestamp() < end);
-		}
+		logger.info("Querying from app {}, between {} and {}..", APP1,
+		        begin + 1, end);
+		for (AuditRecord record : arDao.find_all_by_appId_and_between_time_interval(APP1,
+		        begin + 1, end))
+			logger.info("AuditRecord: {}", record);
 	}
 
 }

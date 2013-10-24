@@ -36,8 +36,8 @@ public class Example {
 	private final UserDao userDao;
 	private final AuditRecordDao arDao;
 
-	private final String APP1 = "app1";
-	private final String APP2 = "app2";
+	private final String APP1 = "APP1";
+	private final String APP2 = "APP2";
 
 	@Inject
 	public Example(UserDao userDao, AuditRecordDao arDao) {
@@ -133,12 +133,12 @@ public class Example {
 		arDao.create(ar5);
 
 		for (AuditRecord record : arDao.findAll())
-			logger.info("AuditRecord: {}", record);
+			logger.info("[findAll] {}", record);
 	}
 
 	private void find_all_by_appId() {
-		for (AuditRecord record : arDao.find_all_by_appId(APP1))
-			logger.info("AuditRecord: {}", record);
+		for (AuditRecord record : arDao.find_all_by_appId(APP2))
+			logger.info("[find_all_by_appId] {}", record);
 	}
 
 	private void find_all_by_appId_and_between_time_interval() {
@@ -146,9 +146,11 @@ public class Example {
 		final long end = new Date().getTime();
 		logger.info("Querying from app {}, between {} and {}..", APP1,
 		        begin + 1, end);
-		for (AuditRecord record : arDao.find_all_by_appId_and_between_time_interval(APP1,
-		        begin + 1, end))
-			logger.info("AuditRecord: {}", record);
+		for (AuditRecord record : arDao
+		        .find_all_by_appId_and_between_time_interval(APP1, begin + 1,
+		                end))
+			logger.info("[find_all_by_appId_and_between_time_interval] {}",
+			        record);
 	}
 
 }

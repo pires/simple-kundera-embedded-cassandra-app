@@ -19,62 +19,61 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.github.pires.example.Constants;
 import com.google.common.base.Objects;
 import com.impetus.kundera.index.Index;
 import com.impetus.kundera.index.IndexCollection;
 
 @Entity
-@Table(name = "users", schema = Constants.KEYSPACE)
+@Table(name = "users")
 @IndexCollection(columns = { @Index(name = "firstName", type = "UTF8Type"),
-        @Index(name = "surname", type = "UTF8Type") })
+    @Index(name = "surname", type = "UTF8Type") })
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private Integer id;
 
-	@Column
-	private String firstName;
+  @Column
+  private String firstName;
 
-	@Column
-	private String surname;
+  @Column
+  private String surname;
 
-	public User() {
-	}
+  public User() {
+  }
 
-	public User(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.surname = lastName;
-	}
+  public User(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.surname = lastName;
+  }
 
-	public Integer getId() {
-		return id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public String getFirstName() {
-		return firstName;
-	}
+  public String getFirstName() {
+    return firstName;
+  }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-	public String getSurname() {
-		return surname;
-	}
+  public String getSurname() {
+    return surname;
+  }
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
+  public void setSurname(String surname) {
+    this.surname = surname;
+  }
 
-	@Override
-	public String toString() {
-		return Objects.toStringHelper(this).add("id", id)
-		        .add("firstname", firstName).add("surname", surname).toString();
-	}
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this).add("id", id)
+        .add("firstname", firstName).add("surname", surname).toString();
+  }
 
 }

@@ -12,18 +12,22 @@
  */
 package com.github.pires.example;
 
-import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
+import com.github.pires.example.dao.UserDao;
 
-/**
- * Initialize services.
- */
-public class AppInitializer {
+public abstract class AbstractTest {
 
-	@Inject
-	AppInitializer(PersistService persistenceService) {
-		// start JPA
-		persistenceService.start();
-	}
+  protected static final int STATUS_OK = 200;
+  protected static final int STATUS_BAD_REQUEST = 400;
+  protected static final int STATUS_UNAUTHORIZED = 401;
+  protected static final int STATUS_FORBIDDEN = 403;
+  protected static final String URL = "http://localhost:8181/tdt";
+
+  protected final UserDao getUserDao() {
+    return EJBLocator.getUserDao();
+  }
+
+  protected final TestEntities getEntities() {
+    return EJBLocator.getEntities();
+  }
 
 }

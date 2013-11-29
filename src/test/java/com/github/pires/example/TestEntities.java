@@ -12,9 +12,25 @@
  */
 package com.github.pires.example;
 
-public final class Constants {
+import com.github.pires.example.model.User;
 
-	public static final String PU = "cassandra_pu";
-	public static final String KEYSPACE = "TestKeyspace@" + PU;
+/**
+ * Test scenario
+ */
+public class TestEntities {
+
+  private User validUser1;
+
+  private TestEntities() {
+    validUser1 = new User("Paulo", "Pires");
+  }
+
+  public static TestEntities bootstrap() {
+    return new TestEntities();
+  }
+
+  public User getValidUser1() {
+    return validUser1;
+  }
 
 }

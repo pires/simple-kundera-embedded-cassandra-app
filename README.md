@@ -1,22 +1,14 @@
 simple-kundera-embedded-cassandra-app
 ======================================
 
-A simple proof-of-concept of a Java application with embedded Cassandra integration, using Kundera and Guice.
+A simple proof-of-concept of a Java EE 7 application with Cassandra integration (Kundera).
 
 ## Prerequisites ##
-- JDK 6
-- Maven 3.0.3 or newer
-- Java EE 7 container (I recommend Glassfish 4, more especifically 4.0.1-b04, nightly as of Sep 25, 2013).
-
-*Note* that this app won't work with a prior version of Java EE container.
+- JDK 7
+- Maven 3.1.0 or newer
 
 ## Test ##
 
 ```
-mvn clean compile exec:java
+mvn clean test
 ```
-
-## TODO ##
-- Replace _exec:java_ with tests
-- Add more complex query examples
-- Add benchmarking (?)
